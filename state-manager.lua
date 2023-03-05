@@ -1,120 +1,62 @@
-local State = {}
-local scenes = {}
-local currentScene = nil
-local state
+local State_Manager = {}
 
-function State.addScene(scene)
-	scenes[scene] = require(scene)
-end
+local states = {}
+local requiredStates = {}
+local activeState = nil
 
-function State.setScene(nextScene)
-	currentScene = nextScene
-end
-
-function State.setGameState(arg)
-	state = arg
-end
-
-function State.getGameState()
-	return state
-end
-
-function State.getScene()
-	if currentScene then
-		return currentScene
+function State_Manager.addState(state)
+	if state:match("[$.]") then
+		local firstWord = state:match("([^.]+)")
+		local lastWord = state:match("[^.]+$")
+		-- states[firstWord][lastWord] = {}
+		table.insert(states[firstWord], lastWord)
 	else
-		error("No scenes found")
+		states[state] = {}
 	end
 end
 
-function State:load()
-	if scenes[currentScene].load then
-		scenes[currentScene]:load()
+function State_Manager.requireState(state)
+	requiredStates[state:match("[^.]+$")] = require(state)
+end
+
+function State_Manager.setState(state)
+	activeState = state
+end
+
+function State_Manager:load()
+	print(tprint(states))
+end
+
+function State_Manager:update(dt)
+
+end
+
+function State_Manager:draw()
+	if requiredStates[activeState].draw then
+		requiredStates[activeState]:draw()
+	end
+
+	for _, child in pairs(states[activeState]) do
+		if requiredStates[child].draw then
+			requiredStates[child]:draw()
+		end
 	end
 end
 
-function State:update(dt)
-	if scenes[currentScene].update then
-		scenes[currentScene]:update(dt)
-	end
+function State_Manager:mousepressed(mx, my, mouseButton)
+
 end
 
-function State:draw()
-	if scenes[currentScene].draw then
-		scenes[currentScene]:draw()
-	end
+function State_Manager:mousereleased(mx, my, mouseButton)
+
 end
 
-function State:mousepressed(x, y, button, istouch, presses)
-	if scenes[currentScene].mousepressed then
-		scenes[currentScene]:mousepressed(x, y, button, istouch, presses)
-	end
+function State_Manager:mousemoved(x, y, dx, dy, istouch)
+
 end
 
-function State:mousereleased(x, y, button, istouch, presses)
-	if scenes[currentScene].mousereleased then
-		scenes[currentScene]:mousereleased(x, y, button, istouch, presses)
-	end
+function State_Manager:keypressed(key,scancode,isrepeat)
+
 end
 
-function State:keypressed(key, scancode, isrepeat)
-	if scenes[currentScene].keypressed then
-		scenes[currentScene]:keypressed(key, scancode, isrepeat)
-	end
-end
-
-function State:keyreleased(key, scancode)
-	if scenes[currentScene].keyreleased then
-		scenes[currentScene]:keyreleased(key, scancode)
-	end
-end
-
-function State:resize()
-	if scenes[currentScene].resize then
-		scenes[currentScene]:resize()
-	end
-end
-
-function State:mousemoved(x, y, dx, dy, istouch)
-	if scenes[currentScene].mousemoved then
-		scenes[currentScene]:mousemoved(x, y, dx, dy, istouch)
-	end
-end
-
-function State:wheelmoved(x, y)
-	if scenes[currentScene].mousemoved then
-		scenes[currentScene]:mousemoved(x, y)
-	end
-end
-
-function State:quit()
-	if scenes[currentScene].quit then
-		scenes[currentScene]:quit()
-	end
-end
-
-function State:touchpressed(id,x,y,dx,dy,pressure)
-	if scenes[currentScene].touchpressed then
-		scenes[currentScene]:touchpressed(id,x,y,dx,dy,pressure)
-	end
-end
-
-function State:touchreleased(id,x,y,dx,dy,pressure)
-	if scenes[currentScene].touchreleased then
-		scenes[currentScene]:touchreleased(id,x,y,dx,dy,pressure)
-	end
-end
-
-function State:touchmoved(id,x,y,dx,dy,pressure)
-	if scenes[currentScene].touchmoved then
-		scenes[currentScene]:touchmoved(id,x,y,dx,dy,pressure)
-	end
-end
-
-function State:textinput(text)
-	if scenes[currentScene].textinput then
-		scenes[currentScene]:textinput(text)
-	end
-end
-
-return State
+return State_Manager
