@@ -2,8 +2,10 @@ TPRINT = require("tprint")
 State_Manager = require("state-manager")
 
 function love.load()
-	State_Manager.requireState("states.game")
+	State_Manager.requireState("states.world")
 	State_Manager.requireState("states.menu")
+	State_Manager.requireState("states.overlay")
+	State_Manager.requireState("states.player")
 	State_Manager.setState("game")
 	State_Manager:load()
 end
