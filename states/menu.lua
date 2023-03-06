@@ -1,7 +1,7 @@
 local Menu = {}
 
 State_Manager.addState("game.menu", 5)
--- State_Manager.exclude("game.menu", {update = true})
+State_Manager.exclude("game.menu", {update = false})
 
 local rec = {
 	x = 100,
@@ -14,6 +14,12 @@ local rec = {
 
 function Menu:load()
 	print("Menu loaded")
+end
+
+function Menu:keypressed(key, scancode, isrepeat)
+	if scancode == "space" then
+		love.event.quit("restart")
+	end
 end
 
 function Menu:update(dt)

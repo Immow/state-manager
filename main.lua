@@ -24,9 +24,6 @@ end
 
 function love.keypressed(key,scancode,isrepeat)
 	State_Manager:keypressed(key,scancode,isrepeat)
-	if scancode == "space" then
-		love.event.quit("restart")
-	end
 end
 
 function love.draw()

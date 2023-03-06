@@ -60,57 +60,63 @@ function State_Manager:load()
 end
 
 function State_Manager:update(dt)
-	-- if requiredStates[currentState].update then
-	-- 	requiredStates[currentState]:update(dt)
-	-- end
-
-	-- for child, i in pairs(states[currentState]) do
-	-- 	if requiredStates[child].update then
-	-- 		if i.update or i.update == nil then
-	-- 			requiredStates[child]:update(dt)
-	-- 		end
-	-- 	end
-	-- end
-
-	-- for i, state in ipairs(states[currentState].drawOrder) do
-	-- 	if not states[currentState].module[state].exclude.update then
-	-- 		requiredStates[state]:update(dt)
-	-- 	end
-	-- end
+	for _, state in ipairs(states[currentState].drawOrder) do
+		if not states[currentState].module[state].exclude.update then
+			if requiredStates[state].update then
+				requiredStates[state]:update(dt)
+			end
+		end
+	end
 end
 
 function State_Manager:draw()
-	-- if requiredStates[currentState].draw then
-	-- 	requiredStates[currentState]:draw()
-	-- end
-
-	-- for child, _ in pairs(states[currentState]) do
-	-- 	if requiredStates[child].draw then
-	-- 		requiredStates[child]:draw()
-	-- 	end
-	-- end
-
-	for i, state in ipairs(states[currentState].drawOrder) do
+	for _, state in ipairs(states[currentState].drawOrder) do
 		if not states[currentState].module.exclude then
-			requiredStates[state]:draw()
+			if requiredStates[state].draw then
+				requiredStates[state]:draw()
+			end
 		end
 	end
 end
 
 function State_Manager:mousepressed(mx, my, mouseButton)
-
+	for _, state in ipairs(states[currentState].drawOrder) do
+		if not states[currentState].module.exclude then
+			if requiredStates[state].mousepressed then
+				requiredStates[state]:mousepressed(mx, my, mouseButton)
+			end
+		end
+	end
 end
 
 function State_Manager:mousereleased(mx, my, mouseButton)
-
+	for _, state in ipairs(states[currentState].drawOrder) do
+		if not states[currentState].module.exclude then
+			if requiredStates[state].mousereleased then
+				requiredStates[state]:mousereleased(mx, my, mouseButton)
+			end
+		end
+	end
 end
 
 function State_Manager:mousemoved(x, y, dx, dy, istouch)
-
+	for _, state in ipairs(states[currentState].drawOrder) do
+		if not states[currentState].module.exclude then
+			if requiredStates[state].mousemoved then
+				requiredStates[state]:mousemoved(x, y, dx, dy, istouch)
+			end
+		end
+	end
 end
 
 function State_Manager:keypressed(key,scancode,isrepeat)
-
+	for _, state in ipairs(states[currentState].drawOrder) do
+		if not states[currentState].module.exclude then
+			if requiredStates[state].keypressed then
+				requiredStates[state]:keypressed(key,scancode,isrepeat)
+			end
+		end
+	end
 end
 
 return State_Manager
