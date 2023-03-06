@@ -1,7 +1,7 @@
 local Menu = {}
 
-State_Manager.addState("game.menu", 5)
-State_Manager.exclude("game.menu", {update = false})
+State_Manager.addState("game", "menu", 5)
+State_Manager.exclude("game", "menu", {update = false})
 
 local rec = {
 	x = 100,

@@ -1,6 +1,6 @@
 local Player = {}
 
-State_Manager.addState("game.player", 10)
+State_Manager.addState("game", "player", 10)
 
 function Player:load()
 	print("Player loaded")

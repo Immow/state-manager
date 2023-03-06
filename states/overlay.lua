@@ -1,6 +1,6 @@
 local Overlay = {}
 
-State_Manager.addState("game.overlay", 2)
+State_Manager.addState("game", "overlay", 2)
 
 function Overlay:load()
 	print("Overlay loaded")
