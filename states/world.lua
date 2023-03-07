@@ -1,6 +1,7 @@
 local World = {}
 
 State_Manager.addState("game", "world", 5)
+State_Manager.addState("cow", "world")
 State_Manager.exclude("game", "world", {update = true})
 
 local rec = {

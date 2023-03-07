@@ -4,9 +4,9 @@ local states = {}
 local requiredStates = {}
 local currentState = nil
 
----@param state string state the module belongs to.
----@param module string the file that your required in main.lua.
----@param order integer draw order z-index, draws from low to high.
+---@param state string: state the module belongs to.
+---@param module string: the file that your required in main.lua.
+---@param order? integer: draw order z-index, draws from low to high.
 function State_Manager.addState(state, module, order)
 	if not state and not module then error("state needs a state and module") end
 
