@@ -17,6 +17,10 @@ function World:load()
 	print("World loaded")
 end
 
+function World:init()
+	print("ran init in World")
+end
+
 function World:update(dt)
 	rec.x = rec.x + (rec.speed * rec.dir) * dt
 
@@ -34,6 +38,8 @@ function World:keypressed(key, scancode, isrepeat)
 		else
 			State_Manager.setState("game")
 		end
+	elseif key == "t" then
+		print("I pressed t")
 	end
 end
 

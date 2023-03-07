@@ -19,7 +19,12 @@ function State_Manager.addState(state, module, order)
 	end
 
 	order = order or 1
-	states[state].module[module] = {exclude = {}, drawPosition = order, name = module}
+	states[state].module[module] = {
+		exclude = {},
+		drawPosition = order,
+		name = module,
+		forceLoad = false
+	}
 
 	if #states[state].drawOrder == 0 then
 		table.insert(states[state].drawOrder, module)
@@ -47,6 +52,7 @@ end
 ---@param state string: sets active state
 function State_Manager.setState(state)
 	currentState = state
+	State_Manager:init()
 end
 
 ---@return string currentState
@@ -61,11 +67,23 @@ function State_Manager.exclude(state, module, fn)
 	states[state].module[module].exclude = fn
 end
 
-function State_Manager:load() --TODO force load option when loading into state?
+--- load gets called once.
+function State_Manager:load()
 	for _, state in ipairs(states[currentState].drawOrder) do
 		if requiredStates[state].load then
 			if not states[currentState].module[state].exclude.load then
 				requiredStates[state]:load()
+			end
+		end
+	end
+end
+
+--- init gets called when you switch state.
+function State_Manager:init()
+	for _, state in ipairs(states[currentState].drawOrder) do
+		if requiredStates[state].init then
+			if not states[currentState].module[state].exclude.init then
+				requiredStates[state]:init()
 			end
 		end
 	end
