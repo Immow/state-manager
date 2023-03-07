@@ -1,3 +1,4 @@
+---@author: Koen Schippers 2023-03-07 01:23:52
 local State_Manager = {}
 
 local states = {}
@@ -60,8 +61,14 @@ function State_Manager.exclude(state, module, fn)
 	states[state].module[module].exclude = fn
 end
 
-function State_Manager:load()
-	print(tprint(states))
+function State_Manager:load() --TODO force load option when loading into state?
+	for _, state in ipairs(states[currentState].drawOrder) do
+		if requiredStates[state].load then
+			if not states[currentState].module[state].exclude.load then
+				requiredStates[state]:load()
+			end
+		end
+	end
 end
 
 function State_Manager:update(dt)
