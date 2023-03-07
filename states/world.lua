@@ -27,6 +27,16 @@ function World:update(dt)
 	end
 end
 
+function World:keypressed(key, scancode, isrepeat)
+	if key == "s" then
+		if State_Manager.getState() ~= "cow" then
+			State_Manager.setState("cow")
+		else
+			State_Manager.setState("game")
+		end
+	end
+end
+
 function World:draw()
 	love.graphics.setColor(0,1,0)
 	love.graphics.rectangle("fill", rec.x, rec.y, rec.w, rec.h)

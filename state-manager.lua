@@ -48,6 +48,11 @@ function State_Manager.setState(state)
 	currentState = state
 end
 
+---@return string currentState
+function State_Manager.getState()
+	return currentState
+end
+
 ---@param state string: state the module belongs to
 ---@param module string: the file that your required in main.lua.
 ---@param fn {update: true|false, draw: true|false, mouspressed: true|false, mousereleased: true|false, mousemoved: true|false, keypressed: true|false}, functions you want to exclude from running
