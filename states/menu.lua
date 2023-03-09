@@ -1,11 +1,12 @@
 local Menu = {}
 
-State_Manager.addState("game", "menu", 5)
-State_Manager.exclude("game", "menu", {update = false})
+local zi = 4
+State_Manager.addState("game", "menu", zi)
+-- State_Manager.exclude("game", "menu", {update = false})
 
 local rec = {
 	x = 100,
-	y = 150,
+	y = 175,
 	w = 100,
 	h = 100,
 	dir = 1,
@@ -17,9 +18,6 @@ function Menu:load()
 end
 
 function Menu:keypressed(key, scancode, isrepeat)
-	if scancode == "space" then
-		love.event.quit("restart")
-	end
 end
 
 function Menu:update(dt)
@@ -35,6 +33,8 @@ end
 function Menu:draw()
 	love.graphics.setColor(0,1,0)
 	love.graphics.rectangle("fill", rec.x, rec.y, rec.w, rec.h)
+	love.graphics.setColor(0,0,0)
+	love.graphics.print(zi, rec.x, rec.y)
 	love.graphics.setColor(1,1,1)
 end
 

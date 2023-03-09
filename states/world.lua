@@ -1,12 +1,13 @@
 local World = {}
 
-State_Manager.addState("game", "world", 5)
+local zi = 1
+State_Manager.addState("game", "world", zi)
 State_Manager.addState("cow", "world")
-State_Manager.exclude("game", "world", {update = true})
+-- State_Manager.exclude("game", "world", {update = true})
 
 local rec = {
 	x = 100,
-	y = 300,
+	y = 100,
 	w = 100,
 	h = 100,
 	dir = 1,
@@ -35,6 +36,7 @@ function World:keypressed(key, scancode, isrepeat)
 	if key == "s" then
 		if State_Manager.getState() ~= "cow" then
 			State_Manager.setState("cow")
+			TEST = true
 		else
 			State_Manager.setState("game")
 		end
@@ -46,6 +48,8 @@ end
 function World:draw()
 	love.graphics.setColor(0,1,0)
 	love.graphics.rectangle("fill", rec.x, rec.y, rec.w, rec.h)
+	love.graphics.setColor(0,0,0)
+	love.graphics.print(zi, rec.x, rec.y)
 	love.graphics.setColor(1,1,1)
 end
 
