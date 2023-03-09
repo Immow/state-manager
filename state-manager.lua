@@ -52,6 +52,8 @@ end
 
 ---@param state string: sets active state
 function State_Manager.setState(state)
+	if state == nil then error("state can't be nil") end
+	if next(states) == nil then error("states does not contain any states / modules") end
 	activeState = currentState or state
 	currentState = state
 	State_Manager:init()
@@ -147,6 +149,16 @@ function State_Manager:keypressed(key,scancode,isrepeat)
 		if requiredStates[state].keypressed then
 			if not states[activeState].module[state].exclude.keypressed then
 				requiredStates[state]:keypressed(key,scancode,isrepeat)
+			end
+		end
+	end
+end
+
+function State_Manager:textinput(t)
+	for _, state in ipairs(states[activeState].drawOrder) do
+		if requiredStates[state].textinput then
+			if not states[activeState].module[state].exclude.textinput then
+				requiredStates[state]:textinput(t)
 			end
 		end
 	end

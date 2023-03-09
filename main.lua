@@ -4,13 +4,20 @@ State_Manager = require("state-manager")
 TEST = false
 
 function love.load()
-	-- love.window.setMode(0, 0, )
 	State_Manager.requireState("states.world")
 	State_Manager.requireState("states.menu")
-	-- State_Manager.requireState("states.overlay")
-	-- State_Manager.requireState("states.player")
+	State_Manager.requireState("states.overlay")
+	State_Manager.requireState("states.player")
 	State_Manager.setState("game")
 	State_Manager:load()
+end
+
+function love.update(dt)
+	State_Manager:update(dt)
+end
+
+function love.draw()
+	State_Manager:draw()
 end
 
 function love.mousepressed(mx, my, mouseButton)
@@ -29,10 +36,6 @@ function love.keypressed(key,scancode,isrepeat)
 	State_Manager:keypressed(key,scancode,isrepeat)
 end
 
-function love.draw()
-	State_Manager:draw()
-end
-
-function love.update(dt)
-	State_Manager:update(dt)
+function love.textinput(t)
+	State_Manager:textinput(t)
 end
